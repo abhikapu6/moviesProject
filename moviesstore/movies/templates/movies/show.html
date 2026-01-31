@@ -45,6 +45,15 @@
             <a class="btn btn-primary" href="{% url 'movies.edit_review' id=template_data.movie.id review_id=review.id %}">Edit</a>
             <a class="btn btn-danger" href="{% url 'movies.delete_review' id=template_data.movie.id review_id=review.id %}">Delete</a>
             {% endif %}
+            {% if user.is_authenticated %}
+              <form method="POST" action="{% url 'report_review' review.id %}">
+                {% csrf_token %}
+                <input type="hidden" name="reason" value="Inappropriate or irrelevant">
+                <button type="submit" class="btn btn-sm btn-outline-danger">
+                  Report
+                </button>
+              </form>
+            {% endif %}
           </li>
           {% endfor %}
         </ul>
